@@ -1,0 +1,33 @@
+<% content_for :right_top_nav do %>
+<div xmlns="http://www.w3.org/1999/html">
+  <a class="top_link" href="/types/new">添加货物类型</a>
+  <a class="top_link" href="/brands/new">添加厂商</a>
+  <a class="top_link" href="/items/new">添加货品</a>
+  <div class="clear"></div>
+</div>
+<% end %>
+
+
+
+
+<div style="margin-top:30px;padding: 30px;">
+
+  <div class="item_summary_block" style="margin-right:10px">
+      <div>品牌总数： <%= @brands.length %></div>
+      <% @brands.each do | brand| %>
+          <div><%= link_to brand.name,[brand] %>      货品数量: <%= brand.items.length %> </div>
+      <% end %>
+  </div>
+  <div class="item_summary_block">
+    <div>商品类型： <%= @types.length %></div>
+    <% @types.each do | type| %>
+        <div><%= link_to type.name,[type] %>    货品数量: <%= type.items.length %> </div>
+    <% end %>
+  </div>
+</div>
+
+
+
+
+
+

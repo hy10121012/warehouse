@@ -1,0 +1,9 @@
+<% content_for :right_top_nav do %>
+    <div>
+      <a class="top_link <% if action_name=="amountStats" %>selected <% else %> nselected<% end %>" href="/stats/amount/">总量排名分析</a>
+      <a class="top_link <% if action_name=="frequencyStats" %>selected <% else %> nselected<% end %>" href="/stats/frequency/">频率排名分析</a>
+      <a class="top_link <% if action_name=="amountStats" %>selected <% else %> nselected<% end %>" href="/stats/speed/">销售速度排名</a>
+      <a class="top_link <% if action_name=="frequencyStats" %>selected <% else %> nselected<% end %>" href="/stats/daily/">日统计</a>
+      <div class="clear"></div>
+    </div>
+<% end %>

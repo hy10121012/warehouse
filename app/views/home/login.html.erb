@@ -1,0 +1,31 @@
+<div class="login_title">
+   Warehouse management system
+</div>
+<div class="login_from">
+<%= form_for :user do |user| %>
+    <div>
+      <div class="login_item_left">
+        <%= user.label :name %>
+      </div>
+      <div class="login_item_right">
+        <%= user.text_field :name %>
+      </div>
+    </div>
+    <div>
+        <div class="login_item_left">
+          <%= user.label :password %>
+        </div>
+        <div class="login_item_right">
+          <%= user.password_field :password %>
+        </div>
+    </div>
+      <div class="clear"></div>
+    <div style="text-align: center">
+      <%=  user.submit :login  %>
+    </div>
+<% end %>
+
+ <%= @status %>
+</div>
+
+

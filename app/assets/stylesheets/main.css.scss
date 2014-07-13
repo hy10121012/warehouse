@@ -1,0 +1,56 @@
+// Place all the styles related to the main controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+.main_left_box{
+  float: left;
+  width: 200px;
+  border-right: 1px solid #000000;
+  height: 100%;
+
+}
+
+.main_left_box_item{
+  padding:5px;
+  width: 150px;
+  border: 1px solid #000000;
+}
+
+.main_left_box_item  a{
+  color: #FFFFFF;
+  text-decoration: none;
+}
+.main_right_box{
+  float: left;
+  height: 100%;
+
+}
+
+.main_list{
+  width:100%;
+}
+
+.main_list_title{
+  font:bolder;
+  background-color:#4B5AA3;
+  color: #FFFFFF;
+}
+.main_list_row{
+
+}
+.main_list_cell{
+  float: left;
+  width: 120px;
+}
+
+
+.item_summary_block{
+  width:300px;
+  border: 1px solid #000000;
+  float:left;
+}
+
+#no_found{
+  color: #a31b3d;
+}

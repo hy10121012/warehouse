@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Warehouse</title>
+  <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+  <%= javascript_include_tag "thirdparty/jquery.min" %>
+  <%= javascript_include_tag "common" %>
+  <%= javascript_include_tag params[:controller], "data-turbolinks-track" => true %>
+  <%= yield :include_js %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+
+<div style="margin-top:40px;" class="wraper">
+  <div class="main_left_box">
+    <div style="border-bottom: 0px" class="main_left_box_item   <% if params[:controller]=="inventory_operation" %>selected<% else %>nselected <% end %>">
+      <a href = "/inventory_operation">库存操作</a>
+    </div>
+    <div class="main_left_box_item  <% if params[:controller]=="main" && action_name=="index" %>selected<% else %>nselected <% end %>">
+      <a href = "/main/list">查询现有库存</a>
+    </div>
+
+    <% if session[:auth_level]==1 %>
+    <div style="border-top: 0px" class="main_left_box_item  <% if params[:controller]=="main" && action_name=="edit" %>selected<% else %>nselected <% end %>">
+      <a href = "/main/edit">编辑库存</a>
+    </div>
+    <div style="border-top: 0px" class="main_left_box_item  <% if params[:controller]=="stats" %>selected<% else %>nselected <% end %>">
+      <a href = "/stats">数据统计分析</a>
+    </div>
+    <% end %>
+  </div>
+  <div class="main_right_box">
+    <%= yield :right_top_nav %>
+
+    <%= yield %>
+
+  </div>
+   <div class="clear"></div>
+
+
+</div>
+</body>
+</html>

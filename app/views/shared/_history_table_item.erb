@@ -1,0 +1,50 @@
+<div class="item_history_title">
+  <div class="item_history_row_cell">
+    类型
+  </div>
+  <div class="item_history_row_cell">
+    箱数
+  </div>
+  <div class="item_history_row_cell">
+    数量
+  </div>
+  <!--<div class="item_history_row_cell">-->
+    <!--价格-->
+  <!--</div>-->
+
+  <div class="item_history_row_cell">
+    时间
+  </div>
+  <div class="clear"></div>
+</div>
+<% if records.size ==0 %>
+    do not have any record
+<% else %>
+    <% records.each do |record| %>
+        <div class="item_history_row" style="background-color:  <% if record.buy_sell==BuySell::BUY %> #aaeeff;<% else %> #aaee00; <%end%> ">
+          <div class="item_history_row_cell">
+            <% if record.buy_sell==BuySell::BUY %>
+                进货
+            <% else %>
+                出货
+            <%end  %></div>
+          <div class="item_history_row_cell">
+            <%= record.box %>
+          </div>
+          <div class="item_history_row_cell">
+            <%= record.quantity %>
+          </div>
+          <!--<div class="item_history_row_cell">-->
+            <!--<%= record.price %>-->
+          <!--</div>-->
+          <!--<div class="item_history_row_cell">-->
+            <!--<%= (record.price*record.quantity).round(2) %>-->
+          <!--</div>-->
+          <div class="item_history_row_cell">
+            <%= record.created_at %>
+          </div>
+          <div class="clear"></div>
+        </div>
+    <% end %>
+
+<% end %>

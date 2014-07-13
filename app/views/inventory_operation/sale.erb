@@ -1,0 +1,120 @@
+<%= form_for :sale,url: "sale" do |i| %>
+
+    <div class="content" style="margin-top: 20px;">
+      <div class="content_row">
+        <div class="content_cell" style="width:100px">
+          <%= i.label :单号  %>
+        </div>
+        <div class="content_cell">
+          <%= i.text_field :order, :name=>"code",class: "calc_amt", :required => true %>
+        </div>
+        <div class="clear"></div>
+      </div>
+      <div class="content_row">
+        <div class="content_cell" style="width:100px">
+          <%= i.label :产品  %>
+        </div>
+        <div class="content_cell">
+          <%= i.text_field :item_code, :name=>"code",:onkeyup =>"find_item_by_name(this);calc_price()" ,class: "calc_amt", :required => true %>
+        </div>
+
+      <!--<div class="content_row">-->
+        <!--<div class="content_cell" style="width:100px">-->
+          <!--<%= i.label :箱数  %>-->
+        <!--</div>-->
+        <!--<div class="content_cell">-->
+          <%= hidden_field 'item','box', :id => "box", :value=>0,class: "calc_amt" %>
+          <%= hidden_field 'item','multiplier', :id => "multiplier",:value=>0,class: "calc_amt" %>
+        <!--</div>-->
+        <!--<div class="content_cell" style="width:100px">-->
+          <!--<%= i.label :每箱件数  %>-->
+        <!--</div>-->
+        <!--<div class="content_cell">-->
+          <!--<%= text_field 'item','multiplier', :id => "multiplier",  :onchange =>"cal();calc_price()",:value=>20,class: "calc_amt" %>-->
+        <!--</div>-->
+        <!--<div class="clear"></div>-->
+      <!--</div>-->
+
+        <div class="content_cell" style="width:100px">
+          <%= i.label :数量  %>
+        </div>
+        <div class="content_cell">
+          <%= i.text_field :quantity,class: "calc_amt" ,:onchange =>"cal();calc_price()"%>
+        </div>
+
+       <a href="javascript:add()">添加</a>
+        <div class="clear"></div>
+      </div>
+      <div class="content_row">
+        <div class="content_cell" style="width:100px">
+          <%= i.label :价格  %>
+        </div>
+        <div class="content_cell">
+          <%= i.label '', id: "price" %>
+        </div>
+        <div class="clear"></div>
+      </div>
+      <div class="content_row">
+        <div class="content_cell" style="width:100px">
+          <%= i.label :总价  %>
+        </div>
+        <div class="content_cell">
+          <%= i.label '', id: "amount" %>
+        </div>
+        <div class="clear"></div>
+      </div>
+      <div class="content_row">
+
+      </div>
+      <br />
+      <div id="order_list">
+        <div class='order_row'>
+        <div class='order_item'>
+           货号
+        </div>
+        <div class='order_item'>
+            数量
+        </div>
+        <div class='order_item'>
+                总价
+        </div>
+       <div class='clear'></div>
+       </div>
+      </div>
+      <div class="content_row">
+        <%=  i.submit :出货  %>
+      </div>
+    </div>
+<% end %>
+
+<script type="text/javascript">
+    function cal(){
+//        b = $('#box').val()*1;
+//        m = $('#multiplier').val()*1;
+//        am = b*m;
+//        $('#sale_quantity').val(am);
+
+    }
+
+    function add(){
+        if( $('#amount').text()*1>0 ){
+            var html
+            html = "<div class='order_row'>"
+            html += "<div class='order_item'>"
+            html += $('#sale_item_code').val()
+            html += "</div>"
+            html += "<div class='order_item'>"
+            html += $('#sale_quantity').val()
+            html += "</div>"
+            html += "<div class='order_item'>"
+            html += $('#amount').text()
+            html += "</div>"
+            html += "<div class='clear'></div>"
+            html += "</div>"
+
+            $('#order_list').append(html)
+        }
+    }
+
+
+</script>

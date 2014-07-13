@@ -1,0 +1,48 @@
+<% content_for :include_js do %>
+<%= javascript_include_tag "thirdparty/jquery.flot.min" %>
+<%= javascript_include_tag "thirdparty/jquery.flot.time.min" %>
+<% end %>
+
+
+<div>
+  <%= form_for :item,:method=>:get,  url: "/item/item_code" do |i| %>
+      <div class="content" style="margin-top: 20px;">
+        <div class="content_row">
+          <div class="content_cell">输入货号:<%= i.text_field :item_code, :name=>"code",:onkeyup =>"find_item_by_name(this)" %>     <%=  i.submit :查询  %>   <span id="no_found"> <%= @no_found %> </span>
+          </div>
+          <div class="clear"></div>
+        </div>
+      </div>
+  <% end %>
+
+
+
+</div>
+
+<div class="main_list">
+  <div class="main_list_title">
+    <!--<div class="main_list_cell">名称</div>-->
+    <div class="main_list_cell">货号</div>
+    <div class="main_list_cell">厂家</div>
+    <div class="main_list_cell">类型</div>
+    <div class="main_list_cell">箱数</div>
+    <div class="main_list_cell">数量</div>
+    <!--<div class="main_list_cell">价格</div>-->
+    <!--<div class="main_list_cell">总价</div>-->
+    <div class="clear"></div>
+  </div>
+</div>
+
+<% @items.each do |item|  %>
+    <div class="main_list_row">
+      <!--<div class="main_list_cell"><%=  link_to item.name ,item_path(item)    %></div>-->
+      <div class="main_list_cell"><%=  link_to item.item_code ,item_path(item)    %></div>
+      <div class="main_list_cell"><%=  get_brand_name_link(item.brand) %></div>
+      <div class="main_list_cell"><%=  get_type_name_link(item.type) %></div>
+      <div class="main_list_cell"><% unless item.primary_inventory ==nil %> <%= item.primary_inventory.box;  %><% else %> 0 <% end %></div>
+      <div class="main_list_cell"><% unless item.primary_inventory ==nil %> <%= item.primary_inventory.quantity;  %><% else %> 0 <% end %></div>
+      <!--<div class="main_list_cell"><%= item.price %></div>-->
+      <!--<div class="main_list_cell"><% unless item.primary_inventory ==nil %><%= (item.price*item.primary_inventory.quantity).round(2) %><% else %> 0<% end %></div>-->
+      <div class="clear"></div>
+    </div>
+<% end %>

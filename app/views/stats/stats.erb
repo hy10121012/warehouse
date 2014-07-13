@@ -1,0 +1,51 @@
+<%= render :partial => 'stats/top_nav' %>
+<div class="stats_box">
+    <div class="stats_nav_row">
+        <a href="?type=buy" class="stats_nav_row_item <% if @buy_sell=="进货统计" %>selected <% else %> nselected<% end %>">进货统计</a>
+      <a href="?type=sell" class="stats_nav_row_item <% if @buy_sell=="出货统计" %>selected <% else %> nselected<% end %>">出货统计</a>
+      <div class="clear"></div>
+    </div>
+  <div class="stats_nav_row">
+    <a href="all" class="stats_nav_row_item <% if params[:period]=="all" or params[:period].nil? %>selected <% else %> nselected<% end %>">全部</a>
+    <a href="year" class="stats_nav_row_item <% if params[:period]=="year" %>selected <% else %> nselected<% end %>">年统计</a>
+    <a href="month" class="stats_nav_row_item <% if params[:period]=="month" %>selected <% else %> nselected<% end %>">月统计</a>
+    <a href="week" class="stats_nav_row_item <% if params[:period]=="week" %>selected <% else %> nselected<% end %>">周统计</a>
+    <div class="clear"></div>
+  </div>
+
+  <div>
+    <div style="padding:10px; font-size: 26px;margin-top: 40px;">
+        <b><%= @buy_sell %></b>
+
+    </div>
+
+   <div class="list_table">
+     <div class="list_row">
+       <div class="list_row_cell">货号</div>
+       <div class="list_row_cell">厂商</div>
+       <div class="list_row_cell">箱数</div>
+       <div class="list_row_cell">数量</div>
+       <div class="list_row_cell">频率</div>
+       <div class="clear"></div>
+     </div>
+     <% @result_array.each do | item |  %>
+
+     <div class="list_row">
+       <div class="list_row_cell"><%=item[1]%></div>
+       <div class="list_row_cell"><%=item[2]%></div>
+       <div class="list_row_cell"><%=item[3]%></div>
+       <div class="list_row_cell"><%=item[4]%></div>
+       <div class="list_row_cell"><%=item[5]%></div>
+       <div class="clear"></div>
+     </div>
+     <% end %>
+
+   </div>
+
+
+  </div>
+
+
+
+
+</div>

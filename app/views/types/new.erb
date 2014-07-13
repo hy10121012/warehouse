@@ -1,0 +1,25 @@
+<% content_for :right_top_nav do %>
+<div xmlns="http://www.w3.org/1999/html">
+  <a class="top_link" href="/main/list"><< back</a>
+  <div class="clear"></div>
+</div>
+<% end %>
+
+
+<%= form_for :type,  url: types_path do |type| %>
+
+<div class="content" style="margin-top: 20px;">
+  <div class="content_row">
+    <div class="content_cell" style="width:100px">
+      <%= type.label :名称  %>
+    </div>
+    <div class="content_cell">
+      <%= type.text_field :name %>
+    </div>
+    <div class="clear"></div>
+  </div>
+  <div class="content_row">
+    <%=  type.submit :创建  %>
+  </div>
+</div>
+<% end %>

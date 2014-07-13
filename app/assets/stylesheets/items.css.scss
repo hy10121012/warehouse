@@ -1,0 +1,63 @@
+// Place all the styles related to the items controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+
+
+.item_box{
+  padding:10px;
+}
+
+.item_detail{
+  border:1px solid #000000;
+  padding:5px;
+}
+
+.item_detail_row{
+  padding-bottom: 5px;
+}
+
+.item_history{
+
+  border: 1px solid #000000;
+}
+
+.item_history_title{
+  font-weight:bolder;
+  border-bottom: 1px solid #000000;
+
+}
+
+
+.item_display_area{
+  height: 600px;
+  overflow: scroll;
+}
+
+
+
+.item_history_row_cell{
+  width: 170px;
+  padding: 5px;
+  float: left;
+}
+
+.item_history_row{
+  font-weight:normal;
+  font-size:16px;
+  border-bottom: 1px solid #000000;
+}
+
+.title{
+  margin-top: 30px;
+  font-weight:bolder;
+  font-size: 16px;
+}
+
+.option_tag{
+  padding-left: 10px;
+  padding-right: 10px;
+  float: right;
+
+}

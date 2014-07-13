@@ -1,0 +1,53 @@
+<%= form_for :item, :method => :put,  url: item_path(@item) do |i| %>
+
+    <div class="content" style="margin-top: 20px;">
+      <div class="content_row">
+        <div class="content_cell" style="width:100px">
+          <%= i.label :名称  %>
+        </div>
+        <div class="content_cell">
+          <%= i.text_field :name,:value =>@item.name %>
+        </div>
+        <div class="clear"></div>
+      </div>
+      <div class="content_row">
+        <div class="content_cell" style="width:100px">
+          <%= i.label :货号  %>
+        </div>
+        <div class="content_cell">
+          <%= i.text_field :item_code,:value =>@item.item_code %>
+        </div>
+        <div class="clear"></div>
+      </div>
+      <div class="content_row">
+        <div class="content_cell" style="width:100px">
+          <%= i.label :类型  %>
+        </div>
+        <div class="content_cell">
+          <%= i.select :type_id,(@types.collect {|m| [m.name, m.id]}), :required => true %>
+        </div>
+        <div class="clear"></div>
+      </div>
+      <div class="content_row">
+        <div class="content_cell" style="width:100px">
+          <%= i.label :品牌  %>
+        </div>
+        <div class="content_cell">
+          <%= i.select  :brand_id,(  @brands.collect {|m| [m.name, m.id]}), :required => true %>
+        </div>
+        <div class="clear"></div>
+      </div>
+      <div class="content_row">
+        <div class="content_cell" style="width:100px">
+          <%= i.label :价格  %>
+        </div>
+        <div class="content_cell">
+          <%= i.text_field :price,:value =>@item.price, :required => true %>
+        </div>
+        <div class="clear"></div>
+      </div>
+      <div class="content_row">
+        <%=  i.submit :修改   %>
+      </div>
+    </div>
+<% end %>

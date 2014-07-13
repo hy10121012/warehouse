@@ -1,0 +1,52 @@
+// Place all the styles related to the stats controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+
+.stats_box{
+  padding-left:20px;
+}
+
+.stats_nav_row{
+  padding: 5px 5px 5px 5px;
+
+}
+
+#selected{
+  background-color: #000fff;
+}
+
+#nselected{
+  background: #4B5AA3;
+}
+
+.stats_nav_row_item{
+  float: left;
+  margin-left: 10px;
+  margin-right: 10px;
+  padding: 5px;
+  border: 1px solid #000000;
+  color: #ffffff;
+}
+
+.list_table{
+
+}
+
+.list_row{
+  border-bottom: 1px solid #000000;
+}
+
+.list_row_cell{
+  float: left;
+  width:100px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+
+}
+
+
+
+
+

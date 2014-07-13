@@ -1,0 +1,60 @@
+<%= form_for :purchase,url: "purchase"  do |i| %>
+
+    <div class="content" style="margin-top: 20px;">
+      <div class="content_row">
+        <div class="content_cell" style="width:100px">
+          <%= i.label :产品  %>
+        </div>
+        <div class="content_cell">
+          <%= i.text_field :item_code, :name=>"code",:onkeyup =>"find_item_by_name(this)", :required => true %>
+        </div>
+        <div class="clear"></div>
+      </div>
+      <div class="content_row">
+        <div class="content_cell" style="width:100px">
+          <%= i.label :现有数量  %>
+        </div>
+        <div class="content_cell">
+          <span id="q"></span>
+        </div>
+        <div class="clear"></div>
+      </div>
+      <div class="content_row">
+        <div class="content_cell" style="width:100px">
+          <%= i.label :箱数  %>
+        </div>
+        <div class="content_cell">
+          <%= text_field 'item','box', :id => "box",  :onchange =>"cal()",:value=>0 %>
+        </div>
+        <div class="content_cell" style="width:100px">
+          <%= i.label :每箱件数  %>
+        </div>
+        <div class="content_cell">
+          <%= text_field 'item','multiplier', :id => "multiplier",  :onchange =>"cal()",:value=>20 %>
+        </div>
+        <div class="clear"></div>
+      </div>
+      <div class="content_row">
+        <div class="content_cell" style="width:100px">
+          <%= i.label :数量  %>
+        </div>
+        <div class="content_cell">
+          <%= i.text_field :quantity,:value=>0 %>
+        </div>
+        <div class="clear"></div>
+      </div>
+      <div class="content_row">
+        <%=  i.submit :进货  %>
+      </div>
+    </div>
+<% end %>
+
+<script type="text/javascript">
+    function cal(){
+        b = $('#box').val()*1;
+        m = $('#multiplier').val()*1;
+        am = b*m;
+        $('#purchase_quantity').val(am);
+
+    }
+</script>

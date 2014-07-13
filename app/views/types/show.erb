@@ -1,0 +1,31 @@
+<% content_for :include_js do %>
+<%= javascript_include_tag "thirdparty/jquery.flot.min" %>
+<%= javascript_include_tag "thirdparty/jquery.flot.time.min" %>
+<%= javascript_include_tag "items" %>
+<%= stylesheet_link_tag    "examples", media: "all", "data-turbolinks-track" => true %>
+<% end %>
+
+<div class="item_box">
+  <div class="item_detail">
+    <div class="item_detail_row">名称 <%= @type.name %></div>
+    <div class="item_detail_row">货品数量 <%= @type.items.size %></div>
+    <% if session[:auth_level]==1 %>
+    <div class="item_detail_row"><%= form_tag(type_path(@type), :method => "delete")      %><%= submit_tag("删除",:onclick=>"return confirm('你确定?')") %></div>
+    <% end %>
+
+  </div>
+  <div class="title">进出货历史 <span class="option_tag">
+    |
+    <%= link_to "search by date",
+    'javascript:;', :id => 'search_date_btn'  %>
+
+    start date <input id="start_date" style="width:150px" placeholder="YYYY/MM/DD" type="text" /> end date
+    <input id="end_date" style="width:150px" placeholder="YYYY/MM/DD" type="text" />  </span>
+     <span class="option_tag"> | sell</span> <span class="option_tag">  purchase</span>  </div>
+  <div class="item_history">
+    <div id="item_display_area" class="item_display_area">
+      <%= render :partial => 'shared/history_table_item_show_name', :locals => { :records => @records } %>
+    </div>
+  </div>
+
+</div>
