@@ -1,51 +1,98 @@
 <%= render :partial => 'stats/top_nav' %>
 <div class="stats_box">
-    <div class="stats_nav_row">
-        <a href="?type=buy" class="stats_nav_row_item <% if @buy_sell=="进货统计" %>selected <% else %> nselected<% end %>">进货统计</a>
-      <a href="?type=sell" class="stats_nav_row_item <% if @buy_sell=="出货统计" %>selected <% else %> nselected<% end %>">出货统计</a>
-      <div class="clear"></div>
-    </div>
   <div class="stats_nav_row">
-    <a href="all" class="stats_nav_row_item <% if params[:period]=="all" or params[:period].nil? %>selected <% else %> nselected<% end %>">全部</a>
-    <a href="year" class="stats_nav_row_item <% if params[:period]=="year" %>selected <% else %> nselected<% end %>">年统计</a>
-    <a href="month" class="stats_nav_row_item <% if params[:period]=="month" %>selected <% else %> nselected<% end %>">月统计</a>
-    <a href="week" class="stats_nav_row_item <% if params[:period]=="week" %>selected <% else %> nselected<% end %>">周统计</a>
+    <a href="?type=buy" class="stats_nav_row_item
+      <% if @buy_sell=="进货统计" %>selected
+      <% else %> nselected
+      <% end %>">进货统计</a>
+    <a href="?type=sell" class="stats_nav_row_item
+      <% if @buy_sell=="出货统计" %>selected
+      <% else %> nselected
+      <% end %>">出货统计</a>
+
+    <div class="clear"></div>
+  </div>
+  <div class="stats_nav_row">
+    <a href="all" class="stats_nav_row_item
+      <% if params[:period]=="all" or params[:period].nil? %>selected
+      <% else %> nselected
+      <% end %>">全部</a>
+    <a href="year" class="stats_nav_row_item
+      <% if params[:period]=="year" %>selected
+      <% else %> nselected
+      <% end %>">年统计</a>
+    <a href="month" class="stats_nav_row_item
+      <% if params[:period]=="month" %>selected
+      <% else %> nselected
+      <% end %>">月统计</a>
+    <a href="week" class="stats_nav_row_item
+      <% if params[:period]=="week" %>selected
+      <% else %> nselected
+      <% end %>">周统计</a>
+    <a href="custom" class="stats_nav_row_item
+      <% if params[:period]=="custom" %>selected
+      <% else %> nselected
+      <% end %>">自定义</a>
+    <% if params[:period]=="custom" %>
+        从: <input type="text" id="from" name="from" placeholder="格式：yyyymmdd"> 到:
+        <input type="text" id="to" name="to" placeholder="格式：yyyymmdd"> <a id="search_custom" href="#">查询</a>
+    <% end %>
+
     <div class="clear"></div>
   </div>
 
   <div>
     <div style="padding:10px; font-size: 26px;margin-top: 40px;">
-        <b><%= @buy_sell %></b>
-
+      <b><%= @buy_sell %></b>
+      <% if !@from.nil? &&! @to.nil?%>
+      从：<%=Date.parse(@from.to_s) %>   到：  <%=Date.parse(@to.to_s) %>
+      <% end %>
     </div>
 
-   <div class="list_table">
-     <div class="list_row">
-       <div class="list_row_cell">货号</div>
-       <div class="list_row_cell">厂商</div>
-       <div class="list_row_cell">箱数</div>
-       <div class="list_row_cell">数量</div>
-       <div class="list_row_cell">频率</div>
-       <div class="clear"></div>
-     </div>
-     <% @result_array.each do | item |  %>
-
-     <div class="list_row">
-       <div class="list_row_cell"><%=item[1]%></div>
-       <div class="list_row_cell"><%=item[2]%></div>
-       <div class="list_row_cell"><%=item[3]%></div>
-       <div class="list_row_cell"><%=item[4]%></div>
-       <div class="list_row_cell"><%=item[5]%></div>
-       <div class="clear"></div>
-     </div>
-     <% end %>
-
-   </div>
+    <div class="list_table">
+      <div class="list_row">
+        <div class="list_row_cell">货号</div>
+        <div class="list_row_cell">厂商</div>
+        <div class="list_row_cell">箱数</div>
+        <div class="list_row_cell">数量</div>
+        <div class="list_row_cell">频率</div>
+        <div class="clear"></div>
+      </div>
+      <% if !@result_array.nil?
+           @result_array.each do |item| %>
+              <div class="list_row">
+                <div class="list_row_cell"><%= item[1] %></div>
+                <div class="list_row_cell"><%= item[2] %></div>
+                <div class="list_row_cell"><%= item[3] %></div>
+                <div class="list_row_cell"><%= item[4] %></div>
+                <div class="list_row_cell"><%= item[5] %></div>
+                <div class="clear"></div>
+              </div>
+          <% end
+             end %>
+    </div>
 
 
   </div>
 
-
-
-
 </div>
+
+<script>
+    $(function () {
+        $("#from,#to").datepicker({ dateFormat: "yymmdd",buttonText: "Choose"});
+
+        $('#search_custom').click(function(){
+            if($('#from').val()!="" &&  $('#to').val()!="" && $('#from').val()*1 < $('#to').val()*1){
+                window.location = "?from="+$('#from').val()+"&to="+$('#to').val();
+            }
+            else{
+                alert("输入日期不合法")
+            }
+        })
+
+    })
+
+
+    ;
+
+</script>

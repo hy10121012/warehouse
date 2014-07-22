@@ -1,5 +1,7 @@
 require "buySell"
+
 class InventoryOperationController < ApplicationController
+  protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format == 'application/json' }
 
   def default
 
@@ -60,11 +62,24 @@ class InventoryOperationController < ApplicationController
 
   def   sale_action
     STDOUT.sync = true
-    qua = params[:sale][:quantity];
-    box = params[:item][:box];
-    item = Item.find_by_item_code(params[:code])
-    sale_process(box, item.id, qua)
-    redirect_to "/main/list"
+    items = params[:data]
+    @order = Order.new
+    @order.order_number=params[:order]
+
+
+    items.each do |item_row |
+      puts "-->>>>>"+item_row[1].to_yaml
+      data =  item_row[1]
+      qua = data[:quantity]
+      box = 0;
+      item = Item.find_by_item_code(data[:code])
+      sale_process(box, item.id, qua)
+    end
+
+
+    render :text=>'success',  :layout=>false;
+    #redirect_to "/main/list"
+
   end
 
   def sale_process(box, item_id, qua)
@@ -80,10 +95,14 @@ class InventoryOperationController < ApplicationController
         current_inventory.is_latest_version=0;
         unless  new_inventory.nil?
           record = create_record(box, qua, BuySell::SELL, item_id)
+
+
+          record.order = @orderd
           new_inventory.transaction do
             current_inventory.save
             new_inventory.save;
             record.save
+            @order.save
           end
         end
       end

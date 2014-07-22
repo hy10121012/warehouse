@@ -1,0 +1,35 @@
+<%= render :partial => 'stats/top_nav' %>
+<div class="stats_box">
+  <div>
+    <div style="padding:10px; font-size: 26px;margin-top: 40px;">
+      订单号: <%=params[:order_id]%>
+    </div>
+
+    <div class="list_table">
+      <div class="list_row">
+        <div class="list_row_cell">货号</div>
+        <div class="list_row_cell">数量</div>
+        <div class="list_row_cell">单价</div>
+        <div class="list_row_cell">价值</div>
+        <div class="list_row_cell">操作员工</div>
+        <div class="clear"></div>
+      </div>
+      <% @order_items.each do |item| %>
+
+          <div class="list_row">
+            <div class="list_row_cell"><a href="/items/<%= item[0] %>"><%= item.item.item_code %></a></div>
+            <div class="list_row_cell"><%= item.quantity %></div>
+            <div class="list_row_cell"><%= item.price %></div>
+            <div class="list_row_cell"><%= item.quantity*item.price %></div>
+            <div class="list_row_cell"><%= item.staff_id %></div>
+            <div class="clear"></div>
+          </div>
+      <% end %>
+
+    </div>
+
+
+  </div>
+
+
+</div>

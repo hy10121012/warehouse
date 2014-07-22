@@ -72,6 +72,12 @@ class ItemsController < ApplicationController
     render :json=>@items.select("id,item_code"), :layout=>false;
   end
 
+  def name_search
+    @items =   Item.find_by_item_code(params[:code]);
+    puts @items.to_yaml
+    render :text=>!@items.nil?, :layout=>false;
+  end
+
   def search_price
     @items =   Item.find_by_item_code(params[:code]);
     render  :text=>@items.price, :layout=>false;

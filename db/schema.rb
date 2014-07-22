@@ -11,10 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131006011811) do
+ActiveRecord::Schema.define(version: 20140714214242) do
 
   create_table "brands", force: true do |t|
-    t.string   "brand_name"
+    t.string   "name"
     t.string   "brand_country"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -22,28 +22,51 @@ ActiveRecord::Schema.define(version: 20131006011811) do
 
   create_table "inventories", force: true do |t|
     t.integer  "item_id"
+    t.integer  "box",                          null: false
     t.integer  "quantity"
+    t.boolean  "is_latest_version",            null: false
+    t.string   "start_date",        limit: 16
+    t.string   "end_date",          limit: 16
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "items", force: true do |t|
     t.string   "name"
-    t.integer   "type_id"
+    t.string   "item_code",  limit: 32, null: false
+    t.string   "type_id"
     t.integer  "brand_id"
+    t.float    "price",                 null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "orders", force: true do |t|
+    t.string   "order_number"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "records", force: true do |t|
     t.integer  "item_id"
+    t.integer  "box",                                 null: false
     t.integer  "quantity"
-    t.integer  "buy_sell"
+    t.float    "price",                 default: 0.0, null: false
+    t.string   "date",       limit: 15,               null: false
+    t.integer  "buy_sell",   limit: 1,                null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "order_id"
+    t.integer  "staff_id"
+  end
+
+  create_table "regions", force: true do |t|
+    t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "regions", force: true do |t|
+  create_table "staffs", force: true do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -59,6 +82,7 @@ ActiveRecord::Schema.define(version: 20131006011811) do
     t.string   "name"
     t.string   "email"
     t.string   "password"
+    t.integer  "auth_level", limit: 1, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

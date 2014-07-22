@@ -17,14 +17,20 @@ Warehouse::Application.routes.draw do
   get "stats/amount/:period"=>'stats#amountStats'
   get "stats/frequency/"=>'stats#frequencyStats'
   get "stats/frequency/:period"=>'stats#frequencyStats'
-  get "stats/speed/"=>'stats#speed'
-  get "stats/daily/:period"=>'stats#daily'
+  get "stats/daily/:date"=>'stats#daily'
+  get "stats/daily"=>'stats#daily'
+  get "stats/speedy_stats/"=>'stats#speedy_stats'
+  get "stats/order_view/:order_id"=>'stats#order_view'
+
+
 
   get "items/:id/show_by_date"=>'items#show_by_date'
   get "items/:id/test"=>'items#test'
   get "item/item_code"=>'items#search_by_item_code'
   get "item/search_name"=>'items#rough_search'
   get "item/search_price"=>'items#search_price'
+  get "item/is_valid/:code"=>'items#name_search'
+  get "staff/is_valid/:name"=>'staff#validate'
 
 
   resources :users

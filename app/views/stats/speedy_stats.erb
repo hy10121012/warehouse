@@ -1,0 +1,37 @@
+<%= render :partial => 'stats/top_nav' %>
+<div class="stats_box">
+  <div>
+    所有在一个月内出货数量超过半数的款式货号
+  </div>
+  <div>
+    <div style="padding:10px; font-size: 26px;margin-top: 40px;">
+      <b><%= @buy_sell %></b>
+
+    </div>
+
+    <div class="list_table">
+      <div class="list_row">
+        <div class="list_row_cell">货号</div>
+        <div class="list_row_cell">一月内出货量</div>
+        <div class="list_row_cell">出货次数</div>
+        <div class="list_row_cell">首次进货量</div>
+        <div class="clear"></div>
+      </div>
+      <% @result_array.each do |item| %>
+
+          <div class="list_row">
+            <div class="list_row_cell"><a href="/items/<%= item[0] %>"><%= item[1] %></a></div>
+            <div class="list_row_cell"><%= item[2] %></div>
+            <div class="list_row_cell"><%= item[3] %></div>
+            <div class="list_row_cell"><%= item[4] %></div>
+            <div class="clear"></div>
+          </div>
+      <% end %>
+
+    </div>
+
+
+  </div>
+
+
+</div>
