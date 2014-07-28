@@ -1,5 +1,5 @@
 class AddOrderIdToRecords < ActiveRecord::Migration
-  def change
+  def up
     add_column :records, :order_id, :integer
   end
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140714214242) do
+ActiveRecord::Schema.define(version: 20140723221942) do
 
   create_table "brands", force: true do |t|
     t.string   "name"
@@ -22,21 +22,21 @@ ActiveRecord::Schema.define(version: 20140714214242) do
 
   create_table "inventories", force: true do |t|
     t.integer  "item_id"
-    t.integer  "box",                          null: false
+    t.integer  "box"
     t.integer  "quantity"
-    t.boolean  "is_latest_version",            null: false
-    t.string   "start_date",        limit: 16
-    t.string   "end_date",          limit: 16
+    t.integer  "start_date"
+    t.integer  "end_date"
+    t.integer  "is_latest_version"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "items", force: true do |t|
     t.string   "name"
-    t.string   "item_code",  limit: 32, null: false
-    t.string   "type_id"
+    t.string   "item_code"
+    t.integer  "type_id"
     t.integer  "brand_id"
-    t.float    "price",                 null: false
+    t.integer  "types_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -49,11 +49,11 @@ ActiveRecord::Schema.define(version: 20140714214242) do
 
   create_table "records", force: true do |t|
     t.integer  "item_id"
-    t.integer  "box",                                 null: false
+    t.float    "price"
+    t.integer  "box"
+    t.integer  "date"
     t.integer  "quantity"
-    t.float    "price",                 default: 0.0, null: false
-    t.string   "date",       limit: 15,               null: false
-    t.integer  "buy_sell",   limit: 1,                null: false
+    t.integer  "buy_sell"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "order_id"
@@ -82,11 +82,9 @@ ActiveRecord::Schema.define(version: 20140714214242) do
     t.string   "name"
     t.string   "email"
     t.string   "password"
-    t.integer  "auth_level", limit: 1, null: false
+    t.integer  "auth_level"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  add_index "users", ["id"], name: "id", unique: true, using: :btree
 
 end

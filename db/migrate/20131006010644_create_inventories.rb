@@ -6,6 +6,7 @@ class CreateInventories < ActiveRecord::Migration
       t.integer :quantity
       t.integer :start_date
       t.integer :end_date
+      t.integer :is_latest_version
       t.timestamps
     end
   end
