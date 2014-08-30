@@ -1,269 +1,399 @@
-<%= form_for :sale,url: "sale" do |i| %>
+<%= form_for :sale, url: "sale" do |i| %>
 
-    <div class="content" style="margin-top: 20px;">
+    <div id="content" class="content" style="margin-top: 20px;">
+      <style>
+          .order_item {
+              width: 150px;
+              height: 30px;
+              display: block;
+              float: left;
+          }
+
+          .calc_amt {
+              width: 100px;
+          }
+      </style>
+
+
       <div class="content_row">
         <div class="content_cell" style="width:100px">
-          <%= i.label :单号  %>
+          <%= i.label :单号 %>
         </div>
         <div class="content_cell">
-          <%= i.text_field :order, :name=>"code",class: "calc_amt", :required => true %>
+          <%= i.text_field :order, :name => "code", class: "calc_amt", :required => true %>
         </div>
         <div class="content_cell" style="width:100px">
-          <%= i.label :员工  %>
+          <%= i.label :员工 %>
         </div>
         <div class="content_cell">
-          <%= i.text_field :staff, :name=>"staff",class: "calc_amt", :required => true %>
+          <%= i.text_field :staffs, :name => "staffs", class: "calc_amt", :required => true %>
         </div>
         <div class="clear"></div>
+
       </div>
       <div class="content_row">
-        <div class="content_cell" style="width:100px">
-          <%= i.label :产品  %>
-        </div>
-        <div class="content_cell">
-          <%= i.text_field :item_code, :name=>"code" ,class: "calc_amt", :required => true %>
-        </div>
-
-      <!--<div class="content_row">-->
-        <!--<div class="content_cell" style="width:100px">-->
-          <!--<%= i.label :箱数  %>-->
-        <!--</div>-->
-        <!--<div class="content_cell">-->
-          <%= hidden_field 'item','box', :id => "box", :value=>0,class: "calc_amt" %>
-          <%= hidden_field 'item','multiplier', :id => "multiplier",:value=>0,class: "calc_amt" %>
-        <!--</div>-->
-        <!--<div class="content_cell" style="width:100px">-->
-          <!--<%= i.label :每箱件数  %>-->
-        <!--</div>-->
-        <!--<div class="content_cell">-->
-          <!--<%= text_field 'item','multiplier', :id => "multiplier",:value=>20,class: "calc_amt" %>-->
-        <!--</div>-->
-        <!--<div class="clear"></div>-->
-      <!--</div>-->
-
-        <div class="content_cell" style="width:100px">
-          <%= i.label :数量  %>
-        </div>
-        <div class="content_cell">
-          <%= i.text_field :quantity,class: "calc_amt" %>
-        </div>
-
-       <a id="add" href="#">添加</a>
-        <div class="clear"></div>
-      </div>
-      <div class="content_row">
-        <div class="content_cell" style="width:100px">
-          <%= i.label :价格  %>
-        </div>
-        <div class="content_cell">
-          <%= i.label '', id: "price" %>
-        </div>
-        <div class="clear"></div>
-      </div>
-      <div class="content_row">
-        <div class="content_cell" style="width:100px">
-          <%= i.label :总价  %>
-        </div>
-        <div class="content_cell">
-          <%= i.label '', id: "amount" %>
-        </div>
+        <%= hidden_field 'item', 'box', :id => "box", :value => 0, class: "calc_amt" %>
+        <%= hidden_field 'item', 'multiplier', :id => "multiplier", :value => 0, class: "calc_amt" %>
+        <!--<%= text_field 'item', 'multiplier', :id => "multiplier", :value => 20, class: "calc_amt" %>-->
         <div class="clear"></div>
       </div>
 
-      <div class="content_row">
-
-      </div>
-      <br />
+      <br/>
       <a id="print" href="#">打印订单</a>
+
       <div id="order_list">
         <div class='order_row'>
-        <div class='order_item'>
-           货号
+          <div class='order_item'>
+            Item code
+          </div>
+          <div class='order_item'>
+            Quantity
+          </div>
+          <div style='width: 100px;' class='order_item'>
+            Price
+          </div>
+          <div style='width: 100px;' class='order_item'>
+            Sub Total
+          </div>
+          <div class='clear'></div>
         </div>
-        <div class='order_item'>
-            数量
+        <% (1..10).each do |k| %>
+            <div class="order_item_row" class='order_row'>
+              <div class='order_item code'>
+                <%= i.text_field :item_code, :id => "item_code_"+k.to_s, :name => "code", class: "calc_amt item_code", :autocomplete => 'off', :required => true %>
+              </div>
+              <div class='order_item '>
+                <%= i.text_field :quantity, class: "calc_amt quantity", id: "quantity_"+k.to_s %>
+              </div>
+              <div style='width: 100px;height: 40px;' class='order_item '>
+                <%= i.label '', id: "price_"+k.to_s, :class => "price" %>
+              </div>
+              <div style='width: 100px;height: 40px;' class='order_item '>
+                <%= i.label '', id: "amount_"+k.to_s, :class => "amount" %>
+              </div>
+              <div class='clear'></div>
+            </div>
+        <% end %>
+      </div>
+      <div class="content_row">
+        <div class="order_item content_cell">
+          <%= i.label :VAT %>%
         </div>
-        <div class='order_item'>
-                总价
+        <div class="order_item content_cell">
+          <%= i.text_field :vat, class: "calc_amt vat", id: "vat" %>%
         </div>
-       <div class='clear'></div>
-       </div>
+        <div class="order_item content_cell"  style='width: 100px;height: 40px;' >
+          <%= i.label :折扣 %>
+        </div>
+        <div class="order_item content_cell">
+          <%= i.text_field :discount, class: "calc_amt discount", id: "discount" %>
+        </div>
+        <div class="clear"></div>
+      </div>
+      <div class="content_row">
+        <div class="order_item content_cell">
+          <%= i.label :总件数 %>
+        </div>
+        <div class="order_item content_cell">
+          <label class="total_item" for="sale_" id="total_item"></label>
+        </div>
+        <div class="order_item content_cell" style='width: 100px;height: 40px;'>
+          <%= i.label :总价格 %>
+        </div>
+        <div style='width: 100px;height: 40px;' class="order_item content_cell">
+          <label class="total_sum" for="sale_" id="total_sum"></label>
+        </div>
+        <div class="clear"></div>
+      </div>
+      <div class="content_row">
+        <a id="add" href="#">添加</a>
+        <!--<%= i.submit :出货, :onclick =>'submit();return false;' %>-->
       </div>
       <div class="content_row">
         <a id="submit" href="#">出货</a>
-
-        <!--<%=  i.submit :出货, :onclick =>'submit();return false;'  %>-->
+        <!--<%= i.submit :出货, :onclick =>'submit();return false;' %>-->
       </div>
     </div>
 <% end %>
 
 <script type="text/javascript">
-
-
-    $(document).ready(function(){
-        var data = []
+    function get_number(obj) {
+        var id = $(obj).attr('id');
+        var n = id.substr(id.lastIndexOf('_') + 1)
+        return n;
+    }
+    $(document).ready(function () {
         var valid = 0;
+        var id = 11;
         var valid_staff = 0;
-        var i=0;
-        $('#sale_quantity, #sale_item_code').on('change',function(){
-            calc_price()
+        $('.quantity, .item_code,#vat,#discount').live('change', function () {
+            calc_price(get_number(this))
         })
-        $('#sale_item_code').on('keyup',function(){
-            find_item_by_name(this);
-            calc_price()
-            validate();
+        $('.item_code').live('keyup', function () {
+            var e = e || window.event;
+            if (e.keyCode != '38' && e.keyCode != '40' && e.keyCode != '13') {
+                var n = get_number(this);
+                find_item_by_name(this);
+                calc_price(n)
+                validate(this);
+            }
         })
-        $('#sale_staff').on('keyup',function(){
-            validate_staff();
-        })
-        $('#add').click(function(){
-            add();
+        $('#sale_staffs').live('keyup', function () {
+            var e = e || window.event;
+            if (e.keyCode != '38' && e.keyCode != '40') {
+                find_staff_by_name(this);
+                validate_staff();
+            }
         })
 
-        $('#submit').click(function(){
+        $('#submit').click(function () {
             submit()
         })
-        $('#print').click(function(){
-            $('#order_list').printThis();
+        $('#add').click(function () {
+            var html = '<div class="order_item_row" class="order_row">'
+            html += '<div class="order_item code">'
+            html += '<input autocomplete="off" class="calc_amt item_code" id="item_code_' + id + '" name="code" required="required" type="text" style="background-color: white;">'
+            html += '</div>'
+            html += ' <div class="order_item">'
+            html += '<input class="calc_amt quantity" id="quantity_' + id + '" name="sale[quantity]" type="text">'
+            html += '</div>'
+            html += '<div style="width: 100px;height: 40px;" class="order_item">'
+            html += '<label class="price" for="sale_" id="price_' + id + '"></label>'
+            html += '</div>'
+            html += '<div style="width: 100px;height: 40px;" class="order_item">'
+            html += '<label class="amount" for="sale_" id="amount_' + id + '"></label>'
+            html += '</div>'
+            html += '<div class="clear"></div>'
+            html += '</div>'
+            $('#order_list').append(html)
+            id++;
         })
 
-        function add(){
-            if(valid==0){
-                alert("货号错误")
-                return false;
-            }
 
-
-            if( $('#amount').text()*1>0 ){
-                var html
-                html = "<div class='order_row'>"
-                html += "<div class='order_item code'>"
-                html += $('#sale_item_code').val()
-                html += "</div>"
-                html += "<div class='order_item '>"
-                html += $('#sale_quantity').val()
-                html += "</div>"
-                html += "<div style='width: 100px' class='order_item '>"
-                html += $('#amount').text()
-                html += "</div>"
-                html += "<div  style='width: 60px' class='order_item '>"
-                html += '<a class="remove" id="remove_" href="#">删除</a>'
-                html += "</div>"
-                html += "<div class='clear'></div>"
-                html += "</div>"
+        function getData() {
+            var data = []
+            $('.order_item_row').each(function () {
                 var item = {}
-                item.code =  $('#sale_item_code').val()
-                item.quantity =  $('#sale_quantity').val()
-                data.push(item);
-                $('#order_list').append(html)
-                $('#sale_item_code').val('')
-                $('#sale_quantity').val('')
-                $('#amount').text('')
-                $('#price').text('')
-            }
+                var code = $(this).find('.item_code').val();
+                var quantity = $(this).find('.quantity').val();
+                console.log(code)
+                console.log(quantity)
+                if (quantity != 0 && code.length > 0) {
+                    item.code = code
+                    item.quantity = quantity
+                    data.push(item);
+                }
+            })
+            return data
         }
 
-        function submit(){
-            console.log(data)
-            if(data.length<=0){
+
+        function cleanData() {
+            $('.item_code').val("");
+            $('.quantity').val("");
+            $('.price').text("");
+            $('.amount').text("");
+            $('#sale_order').val("");
+            $('#sale_staffs').val("");
+            $('#discount').val("");
+            $('#vat').val("");
+            $('#total_item').text("");
+            $('#total_sum').text("");
+            valid = 0
+            valid_staff = 0
+        }
+
+        function submit() {
+
+            console.log()
+            var dt = getData()
+            if (dt.length <= 0) {
                 return false
             }
-            $.post('/inventory_operation/sale',{'data':data,'order':$('#sale_order').val()},function(){
-//                window.location="/main/list"
-            }).fail(function(data){
-                console.log(data.responseText)
-            })
-
-        }
-
-        function validate(){
-            $.get('/item/is_valid/'+$('#sale_item_code').val(),function(data){
-                if(data=="false"){
-                    $('#sale_item_code').css('background-color','red');
-                    valid=0;
-                }else{
-                    $('#sale_item_code').css('background-color','inherit');
-                    valid=1;
-
+            if (valid <= 0) {
+                alert("货号错误")
+                return false
+            }
+            if (valid_staff <= 0) {
+                alert("没有此员工")
+                return false
+            }
+            $.post('/inventory_operation/sale', {'data': dt, 'order': $('#sale_order').val(), 'staff': $('#sale_staffs').val(), 'total_item': $('#total_item').text(), 'total_sum': $('#total_sum').text(), 'discount': $('#discount').val(), 'vat': $('#vat').val()},function (data) {
+                if (data == "success") {
+                    $('#content').printElement();
+                    cleanData();
                 }
-            }).fail(function(data){
-                console.log(data.responseText)
-            })
-
-        }
-
-        function validate_staff(){
-            $.get('/staff/is_valid/'+$('#sale_staff').val(),function(data){
-                if(data=="false"){
-                    $('#sale_staff').css('background-color','red');
-                    valid_staff=0;
-                }else{
-                    $('#sale_staff').css('background-color','inherit');
-                    valid_staff=1;
-
+                else {
+                    alert(data)
                 }
-            }).fail(function(data){
+            }).fail(function (data) {
                         console.log(data.responseText)
                     })
 
         }
 
+        function validate(obj) {
+            var id = get_number(obj)
+            var val = $(obj).val();
+            if (val.length <= 0) {
+                $('#item_code_' + id).css('background-color', 'white');
+                return false;
+            }
+            $.get('/item/is_valid/' + $(obj).val(),function (data) {
+                if (data == "false") {
+                    $('#item_code_' + id).css('background-color', 'red');
+                    valid = 0;
+                } else {
+                    $('#item_code_' + id).css('background-color', 'white');
+                    valid = 1;
 
-        function find_item_by_name(obj){
+                }
+            }).fail(function (data) {
+                        console.log(data.responseText)
+                    })
+        }
+
+        function validate_staff() {
+            $.get('/staffs/is_valid/' + $('#sale_staffs').val(),function (data) {
+                console.log(data)
+                if (data == 'false') {
+                    $('#sale_staffs').css('background-color', 'red');
+                    valid_staff = 0;
+                } else {
+                    $('#sale_staffs').css('background-color', 'white');
+                    valid_staff = 1;
+                }
+            }).fail(function (data) {
+                        console.log(data.responseText)
+                    })
+        }
+
+        function find_item_by_name(obj) {
             $.ajax({
-                type:'get',
-                url:'/item/search_name',
-                data:{
-                    code :  $(obj).val()
+                type: 'get',
+                url: '/item/search_name',
+                data: {
+                    code: $(obj).val()
                 },
-                success: function(data){
+                success: function (data) {
                     var html = "<div class='name_drop_down'>";
-                    $(data).each(function(i,e){
-                        html+='<div class="name_drop_down_item">'+ e.item_code+'</div>';
+                    var id = 1
+                    $(data).each(function (i, e) {
+                        html += '<div id="item_' + id++ + '" class="name_drop_down_item">' + e.item_code + '</div>';
                     });
-                    html +='</div>';
+                    html += '</div>';
                     $('.name_drop_down').remove();
                     $(obj).after(html);
-                    $('.name_drop_down_item').bind("click",(function(e){
+                    window.selected_item_id = 0;
+                    window.boxObj = obj
+                    window.cbfn = function () {
+                        var n = get_number(obj);
+                        get_price($("#item_" + window.selected_item_id).text(), n);
+                        validate(obj);
+                    }
+                    $('.name_drop_down_item').bind("click", (function (e) {
+                        var n = get_number(obj)
                         $(obj).val($(this).text());
-                        get_price($(this).text())
-                        $(this).parent().fadeOut();
-                        validate();
+                        get_price($(this).text(), n)
+                        $(this).parent().remove();
+                        validate(obj);
                     }));
                 },
-                error: function(data){
-//            alert('error'+data);
+                error: function (data) {
                 },
                 format: "json"
             });
         }
 
-        function get_price(name){
+        function find_staff_by_name(obj) {
             $.ajax({
-                type:'get',
-                url:'/item/search_price',
-                data:{
-                    code :  name
+                type: 'get',
+                url: '/staffs/search_name',
+                data: {
+                    name: $(obj).val()
                 },
-                success: function(price){
-                    $('#price').text(price)
+                success: function (data) {
+                    window.selected_item_id = 1;
+                    var html = "<div class='name_drop_down'>";
+                    var id = 1
+                    $(data).each(function (i, e) {
+                        html += '<div id="item_' + id++ + '" class="name_drop_down_item">' + e.name + '</div>';
+                    });
+                    html += '</div>';
+                    $('.name_drop_down').remove();
+                    $(obj).after(html);
+                    window.boxObj = obj
+                    window.cbfn = validate_staff(obj);
+                    $('.name_drop_down_item').bind("click", (function (e) {
+                        $(obj).val($(this).text());
+                        $(this).parent().remove();
+                        validate_staff(obj);
+                    }));
+                },
+                error: function (data) {
+                },
+                format: "json"
+            });
+        }
+
+
+        function get_price(name, id) {
+            $.ajax({
+                type: 'get',
+                url: '/item/search_price',
+                data: {
+                    code: name
+                },
+                success: function (price) {
+                    $('#price_' + id).text(price)
                     calc_price()
                 },
-                error: function(data){
-                    alert('error'+data);
+                error: function (data) {
+                    $('#price_' + id).text("")
+                    alert('error' + data);
                 },
                 format: "text"
             });
         }
 
-        function calc_price(){
-            if( $('#price').text()*1>0 && $('#sale_quantity').val()*1>0 ){
-                amount =  $('#price').text()*1*$('#sale_quantity').val()*1
-                $('#amount').text(amount)
-            }else{
-                amount = $('#sale_quantity').val()*1
-                $('#amount').text(amount)
+        function calc_price(id) {
+            var total_item = 0;
+            var total_amount = 0;
+            var amount = 0;
+            var vat = $('#vat').val();
+            var discount =  $('#discount').val();
+            if(vat.length==0){
+                vat=0
             }
+            if(discount.length==0){
+                discount=0
+            }
+
+
+            if ($('#price_' + id).text() * 1 > 0) {
+                amount = ($('#price_' + id).text() * 1 * $('#quantity_' + id).val() * 1).toFixed(2);
+                $('#amount_' + id).text(amount)
+            } else {
+                amount = 0
+                $('#amount_' + id).text(amount)
+            }
+            $('.order_item_row').each(function () {
+                var item = {}
+                var code = $(this).find('.item_code').val();
+                var quantity = $(this).find('.quantity').val();
+                var amount = $(this).find('.amount').text();
+                if (code.length > 0) {
+                    console.log(amount)
+                    console.log(quantity)
+                    total_item += quantity * 1
+                    total_amount += amount * 1
+                    item.code = code
+                    item.quantity = quantity
+                }
+            })
+            total_amount=total_amount*(1+(vat*0.01))-discount
+            $('#total_item').text(total_item);
+            $('#total_sum').text(total_amount.toFixed(2));
         }
 
     })

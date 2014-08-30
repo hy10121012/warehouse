@@ -1,5 +1,6 @@
 class Record < ActiveRecord::Base
   belongs_to :item
+  belongs_to :staff
   belongs_to :order
 
 
@@ -13,7 +14,7 @@ class Record < ActiveRecord::Base
   end
 
   def self.get_daily_stats(data)
-    self.select("order_id ,count(item_id) item_quant, sum(quantity) total_quant, sum(quantity*records.price) amount").where("date=#{data} and buy_sell=2").group("order_id")
+    self.select("orders.id order_id,orders.order_number,count(records.item_id) item_quant, sum(records.quantity) total_quant, sum(records.quantity*records.price) amount").where("records.date=#{data} and records.buy_sell=2").joins("left join orders on records.order_id=orders.id").group("records.order_id")
   end
 
 

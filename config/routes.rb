@@ -30,13 +30,15 @@ Warehouse::Application.routes.draw do
   get "item/search_name"=>'items#rough_search'
   get "item/search_price"=>'items#search_price'
   get "item/is_valid/:code"=>'items#name_search'
-  get "staff/is_valid/:name"=>'staff#validate'
+  get "staffs/is_valid/:name"=>'staffs#validate'
+  get "staffs/search_name"=>'staffs#search_name'
 
 
   resources :users
   resources :brands
   resources :types
   resources :items
+  resources :staffs
 
 
 

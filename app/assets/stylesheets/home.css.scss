@@ -6,25 +6,22 @@
 
 .login_from{
   background-color: #ececec;
+}
 
+.login_center{
+  width: 70%;
+  margin-right: auto;
+  margin-left: auto;
 }
 
 
-
-.login_item_left{
-  float: left;
+.login_item{
   paddin-left: 20px;
   padding-top:5px;
   padding-bottom: 5px;
-  width: 470px;
-}
-
-.login_item_right{
-  float: left;
-  paddin-left:10px;
-  padding-top:5px;
-  padding-bottom: 5px;
-  width: 400px;
+  width:300px;
+  margin-right: auto;
+  margin-left: auto;
 }
 
 .login_title{

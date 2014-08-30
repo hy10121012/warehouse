@@ -80,7 +80,6 @@
 <script>
     $(function () {
         $("#from,#to").datepicker({ dateFormat: "yymmdd",buttonText: "Choose"});
-
         $('#search_custom').click(function(){
             if($('#from').val()!="" &&  $('#to').val()!="" && $('#from').val()*1 < $('#to').val()*1){
                 window.location = "?from="+$('#from').val()+"&to="+$('#to').val();
@@ -91,8 +90,4 @@
         })
 
     })
-
-
-    ;
-
 </script>

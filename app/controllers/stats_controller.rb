@@ -9,7 +9,7 @@ class StatsController < ApplicationController
 
   def amountStats
     if good_custom_or_other?
-      time_clause,@from,@to  = prepare_where_clause()
+      time_clause, @from, @to = prepare_where_clause()
       sort_by="quan"
       get_result(time_clause, sort_by)
     end
@@ -18,7 +18,7 @@ class StatsController < ApplicationController
 
   def frequencyStats
     if good_custom_or_other?
-      time_clause,@from,@to = prepare_where_clause()
+      time_clause, @from, @to = prepare_where_clause()
       sort_by="freq"
       get_result(time_clause, sort_by)
     end
@@ -45,10 +45,9 @@ class StatsController < ApplicationController
     puts params[:type].to_yaml
 
 
-
     if params[:period]=="month"
-      from =  Date.today.to_time.advance(:months => -1).strftime(DATE_FORMAT).to_i
-      to =  Date.today.to_time.strftime(DATE_FORMAT).to_i
+      from = Date.today.to_time.advance(:months => -1).strftime(DATE_FORMAT).to_i
+      to = Date.today.to_time.strftime(DATE_FORMAT).to_i
       time_clause = "  date>= #{from} and date<=#{to}"
     elsif params[:period]=="week"
       from = Date.today.to_time.advance(:weeks => -1).strftime(DATE_FORMAT).to_i
@@ -85,7 +84,7 @@ class StatsController < ApplicationController
       time_clause = "where #{time_clause}"
     end
     puts "#{time_clause}"
-    return time_clause,from,to
+    return time_clause, from, to
   end
 
   def speedy_stats()
@@ -98,14 +97,18 @@ class StatsController < ApplicationController
     render :speedy_stats
   end
 
-  def daily(date=Time.now.strftime(DATE_FORMAT).to_i)
+  def daily()
+    if(params[:date].nil?)
+      date=Time.now.strftime(DATE_FORMAT).to_i
+    else
+      date =params[:date];
+    end
     @result_array= Record.get_daily_stats(date)
     item_detail= Record.where("date=#{date} and buy_sell=2")
     @item_count = Hash.new(0);
     item_detail.each do |record|
       @item_count[record.item.item_code]+=record.quantity
     end
-
 
     @total_quant=0
     @total_amount=0;
@@ -114,16 +117,18 @@ class StatsController < ApplicationController
       @total_quant+=row.total_quant
       @total_amount+=row.amount
     end
+    puts date
     render :daily_stats
   end
 
   def order_view
     result = Record.where("order_id=#{params[:order_id]}")
     @order_items = result
+    @order = Order.find(params[:order_id])
     puts @order_items.inspect
   end
 
   def good_custom_or_other?
-    (params[:period]=='custom' && !params[:from].nil? && !params[:to].nil? && !params[:from].empty? && !params[:to].empty?) ||  params[:period]!='custom'
+    (params[:period]=='custom' && !params[:from].nil? && !params[:to].nil? && !params[:from].empty? && !params[:to].empty?) || params[:period]!='custom'
   end
 end

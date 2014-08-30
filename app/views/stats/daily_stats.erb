@@ -3,6 +3,7 @@
   <div style="margin-top: 10px;">
     每日总的销售单数，单号， 总出货数量，总金额，各个款式的出货总和
   </div>
+  日期: <input type="text" id="date" name="date" placeholder="格式：yyyymmdd"><a href="#" onclick="window.location='/stats/daily/'+$('#date').val()">查询</a>
   <div style="margin-top: 10px;">
     本日销售详情 单数: <%=@result_array.size%>         总出货数量:   <%=@total_quant%>                总价:   <%=@total_amount%>
   </div>
@@ -33,7 +34,7 @@
       <% @result_array.each do |item| %>
 
           <div class="list_row">
-            <div class="list_row_cell"><a href="/stats/order_view/<%=item.order_id%>"><%= item.order_id %></a></div>
+            <div class="list_row_cell"><a href="/stats/order_view/<%=item.order_id%>"><%= item.order_number %></a></div>
             <div class="list_row_cell"><%= item.item_quant %></div>
             <div class="list_row_cell"><%= item.total_quant %></div>
             <div class="list_row_cell"><%= item.amount %></div>
@@ -48,3 +49,18 @@
 
 
 </div>
+
+<script>
+    $(function () {
+        $("#date").datepicker({ dateFormat: "yymmdd",buttonText: "Choose"});
+        $('#search_custom').click(function(){
+            if($('#from').val()!="" &&  $('#to').val()!="" && $('#from').val()*1 < $('#to').val()*1){
+                window.location = "?from="+$('#from').val()+"&to="+$('#to').val();
+            }
+            else{
+                alert("输入日期不合法")
+            }
+        })
+
+    })
+</script>

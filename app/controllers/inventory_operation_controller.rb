@@ -63,20 +63,22 @@ class InventoryOperationController < ApplicationController
   def   sale_action
     STDOUT.sync = true
     items = params[:data]
-    @order = Order.new
-    @order.order_number=params[:order]
+    if(Order.where(:order_number=>params[:order]).count==0)
+      @order = Order.new
+      @order.order_number=params[:order]
+      @order.vat =params[:vat]
+      @order.discount =params[:discount]
+      @staff = Staff.find_by_name(params[:staff])
 
-
-    items.each do |item_row |
-      puts "-->>>>>"+item_row[1].to_yaml
-      data =  item_row[1]
-      qua = data[:quantity]
-      box = 0;
-      item = Item.find_by_item_code(data[:code])
-      sale_process(box, item.id, qua)
+      items.each do |item_row |
+        puts "-->>>>>"+item_row[1].to_yaml
+        data =  item_row[1]
+        qua = data[:quantity]
+        box = 0;
+        item = Item.find_by_item_code(data[:code])
+        sale_process(box, item.id, qua)
+      end
     end
-
-
     render :text=>'success',  :layout=>false;
     #redirect_to "/main/list"
 
@@ -97,7 +99,8 @@ class InventoryOperationController < ApplicationController
           record = create_record(box, qua, BuySell::SELL, item_id)
 
 
-          record.order = @orderd
+          record.order = @order
+          record.staff = @staff
           new_inventory.transaction do
             current_inventory.save
             new_inventory.save;

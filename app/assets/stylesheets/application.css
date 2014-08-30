@@ -75,5 +75,10 @@ a{
     color: #FFFFFF;
 }
 
+.name_drop_down_item_selected{
+    background-color: #999999;
+    color: #FFFFFF;
+}
+
 
 

@@ -11,9 +11,10 @@
 // about supported directives.
 //
 //= require jquery
-//= require thirdparty/jquery.print
 //= require jquery_ujs
 //= require turbolinks
+//= require thirdparty/jquery.printpage
 //= require_tree .
+
 
 
